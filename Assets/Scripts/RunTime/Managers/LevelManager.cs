@@ -67,7 +67,6 @@ public class LevelManager : MonoBehaviour
     }
     private void OnRestartLevel()
     {
-        _currentLevel++;
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
@@ -87,6 +86,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte) (_currentLevel % totalLevelCount));
+        CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
     }
     
 }

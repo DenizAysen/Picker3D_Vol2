@@ -39,7 +39,11 @@ public class UIPanelController : MonoBehaviour
 #endif
         }
     }
-
+    [NaughtyAttributes.Button]
+    private void OpenLevelPanel()
+    {
+        Instantiate(Resources.Load<GameObject>("Screens/LevelPanel"), layers[0]);
+    }
     private void OnOpenPanel(UIPanelTypes panelType, int value)
     {
         OnClosePanel(value);
