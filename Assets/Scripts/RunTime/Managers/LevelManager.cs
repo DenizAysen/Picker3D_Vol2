@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     #region Seriliazed Variables
     [SerializeField] private Transform levelHolder;
     [SerializeField] private byte totalLevelCount;
+    [SerializeField] private CoreGameSignals gameSignals;
     #endregion
 
     #region Private Variables
@@ -23,7 +24,7 @@ public class LevelManager : MonoBehaviour
     {
         _levelData = GetLevelData();
         _currentLevel = GetActiveLevel();
-
+        
         Init();
     }
     private void Init()
@@ -48,12 +49,20 @@ public class LevelManager : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        if(CoreGameSignals.Instance == null)
+        {
+            Debug.Log("CoreGameSignals olusmadi");
+            var var = Instantiate(gameSignals.gameObject, transform.parent);
+            CoreGameSignals.Instance = var.GetComponent<CoreGameSignals>();
+        }
+           
         CoreGameSignals.Instance.onLevelInitialize += _levelLoaderCommand.Execute;
         CoreGameSignals.Instance.onClearActiveLevel += _levelDestroyerCommand.Execute;
         CoreGameSignals.Instance.onGetLevelValue += OnGetLevelValue;
         CoreGameSignals.Instance.onNextLevel += OnNextLevel;
         CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
     }
+    
     public byte OnGetLevelValue() 
     { 
         return (byte)_currentLevel; 

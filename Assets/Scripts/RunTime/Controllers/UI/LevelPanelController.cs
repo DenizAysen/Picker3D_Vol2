@@ -21,7 +21,7 @@ public class LevelPanelController : MonoBehaviour
     {
         SubscribeEvents();
     }
-
+   
     private void SubscribeEvents()
     {
         UISignals.Instance.onSetLevelValue += OnSetLevelValues;
