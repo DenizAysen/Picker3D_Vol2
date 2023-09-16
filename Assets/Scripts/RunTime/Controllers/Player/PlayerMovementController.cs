@@ -32,19 +32,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _data = data;
     }
-    public void IsReadyToMove(bool isReady)
-    {
-
-    }
-    public void IsReadyToPlay(bool isReady)
-    {
-
-    }
-    public void UpdateInputParams(HorizontalInputParams inputParams)
-    {
-
-    }
-
+ 
     private void FixedUpdate()
     {
         if (!_isReadyToPlay)
@@ -73,7 +61,35 @@ public class PlayerMovementController : MonoBehaviour
     }
     private void MovePlayer()
     {
-        throw new NotImplementedException();
+        var velocity = rigidbody.velocity;
+        velocity = new Vector3(_xValue * _data.SideWaySpeed, velocity.y, _data.ForwardSpeed);
+        rigidbody.velocity = velocity;
+        var position1 = rigidbody.position;
+        Vector3 position;
+        position = new Vector3(Mathf.Clamp(position1.x, _clampValues.x, _clampValues.y),
+            (position = rigidbody.position).y , position.z);
+        rigidbody.position = position;
     }
 
+    internal void IsReadyToPlay(bool condition)
+    {
+        _isReadyToPlay = condition;
+    }
+    internal void IsReadyToMove(bool condition)
+    {
+        _isReadyToMove = condition;
+    }
+
+    internal void UpdateInputParams(HorizontalInputParams inputParams)
+    {
+        _xValue = inputParams.HorziontalValue;
+        _clampValues = inputParams.ClampValues;
+    }
+
+    internal void OnReset()
+    {
+        StopPlayer();
+        _isReadyToMove = false;
+        _isReadyToPlay = false;
+    }
 }

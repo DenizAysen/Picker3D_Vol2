@@ -22,6 +22,11 @@ public class UIPanelController : MonoBehaviour
 
     private void SubscribeEvents()
     {
+        if(CoreUISignals.Instance == null)
+        {
+            Debug.Log("CoreUISignals olusmadi");
+        }
+
         CoreUISignals.Instance.onClosePanel += OnClosePanel;
         CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
         CoreUISignals.Instance.onCloseAllPanels += OnCloseAllPanels;

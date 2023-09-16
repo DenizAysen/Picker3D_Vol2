@@ -70,12 +70,14 @@ public class InputManager : MonoBehaviour
     {
         if (!_isAvaibleForTouch) return;
 
-        if(Input.GetMouseButtonUp(0) && !_isPointerOverUIElement())
+        if(Input.GetMouseButtonUp(0) /*&& !_isPointerOverUIElement()*/)
         {
+            Debug.Log("Fareden el cekildi");
             _isTouching = false;
             InputSignals.Instance.onInputReleased?.Invoke();
         }
-        if (Input.GetMouseButtonDown(0) && !_isPointerOverUIElement())
+
+        if (Input.GetMouseButtonDown(0) /*&& !_isPointerOverUIElement()*/)
         {
             _isTouching = true;
             InputSignals.Instance.onInputTaken?.Invoke();
@@ -85,48 +87,54 @@ public class InputManager : MonoBehaviour
                 InputSignals.Instance.onFirstTimeTouchTaken?.Invoke();
             }
 
-            _mousePosition = (Vector2)Input.mousePosition;
+            _mousePosition = Input.mousePosition;
+            Debug.Log("Ekrana dokunuldu. Dokunulan pozisyon : " + _mousePosition);
         }
-        if(Input.GetMouseButton(0) && !_isPointerOverUIElement())
+
+        if(Input.GetMouseButton(0) /*&& !_isPointerOverUIElement()*/)
         {
+            
             if (_isTouching)
             {
                 if(_mousePosition != null)
                 {
+
                     Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - _mousePosition.Value;
-                    if(mouseDeltaPos.x > _data.HorizontalInputSpeed)
+
+                    if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
                     {
                         _moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
                     }
-                    else if(mouseDeltaPos.x < _data.HorizontalInputSpeed)
+                    else if (mouseDeltaPos.x < _data.HorizontalInputSpeed)
                     {
-                        _moveVector.x = -_data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
+                        _moveVector.x = -_data.HorizontalInputSpeed / 10f * -mouseDeltaPos.x;
                     }
                     else
                     {
                         _moveVector.x = Mathf.SmoothDamp(-_moveVector.x, 0f, ref _currentVelocity, _data.ClampSpeed);
                     }
-
-                    _mousePosition = (Vector2)Input.mousePosition;
+                    // Debug.Log(_moveVector.x);
+                    _moveVector.x = mouseDeltaPos.x;
+                    _mousePosition = Input.mousePosition;
 
                     InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams
                     {
                         HorziontalValue = _moveVector.x,
-                        ClampValues = (float2)_data.ClampValues
+                        ClampValues = _data.ClampValues
                     });
                 }
             }
         }
     }
 
-    private bool _isPointerOverUIElement()
-    {
-        var eventData = new PointerEventData(EventSystem.current)
-        {
-            position = (Vector2)Input.mousePosition
-        };
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-        return results.Count > 0;
-    }
+    //private bool _isPointerOverUIElement()
+    //{
+    //    var eventData = new PointerEventData(EventSystem.current)
+    //    {
+    //        position = Input.mousePosition
+    //    };
+    //    List<RaycastResult> results = new List<RaycastResult>();
+    //    EventSystem.current.RaycastAll(eventData, results);
+    //    return results.Count > 0;
+    //}
 }

@@ -114,9 +114,9 @@ public class PlayerManager : MonoBehaviour
     private void OnReset()
     {
         StageValue = 0;
-        //movementController.OnReset();
-        //physicsController.OnReset();
-        //meshController.OnReset();
+        movementController.OnReset();
+        physicsController.OnReset();
+        meshController.OnReset();
     }
     private void UnSubscribeEvents()
     {

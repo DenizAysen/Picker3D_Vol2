@@ -60,8 +60,10 @@ public class UIManager : MonoBehaviour
     }
     public void Play()
     {
+        Debug.Log("Play Metodu calisti");
         UISignals.Instance.onPlay?.Invoke();
         CoreUISignals.Instance.onClosePanel?.Invoke(1);
         InputSignals.Instance.onEnableInput?.Invoke();
+        CameraSignals.Instance.onSetCameraTarget?.Invoke();
     }
 }
