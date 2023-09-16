@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ForceBallsToPoolCommand
@@ -18,5 +19,16 @@ public class ForceBallsToPoolCommand
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
         var colliders = Physics.OverlapSphere(forcePos, 1.35f);
+
+        var collectableColliderList = colliders.Where(col => col.CompareTag("Collectable")).ToList();
+
+        foreach (var col in collectableColliderList)
+        {
+            if (col.GetComponent<Rigidbody>() == null) continue;
+            var rb = col.GetComponent<Rigidbody>();
+            rb.AddForce(new Vector3(0, _forceData.ForceParameters.y, _forceData.ForceParameters.z), ForceMode.Impulse);
+        }
+
+        collectableColliderList.Clear();
     }
 }

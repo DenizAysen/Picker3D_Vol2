@@ -52,6 +52,15 @@ public class PlayerPhysicsController : MonoBehaviour
 
         //Odev olarak mini game yapilacak
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        var transform1 = manager.transform;
+        var position1 = transform1.position;
+        var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
+
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y + 1f, position1.z + 1f), 1.35f);
+    }
     public void OnReset()
     {
 
