@@ -109,6 +109,7 @@ public class PlayerManager : MonoBehaviour
     private void OnStageAreaSuccessFull(byte value)
     {
         StageValue = (byte)++value;
+        movementController.IsReadyToPlay(true);
     }
 
     private void OnReset()

@@ -12,7 +12,7 @@ public class PoolController : MonoBehaviour
     #region Serialized Variables
 
     [SerializeField] private List<DOTweenAnimation> tweens = new List<DOTweenAnimation>();
-    [SerializeField] private TextMeshProUGUI poolText;
+    [SerializeField] private TextMeshPro poolText;
     [SerializeField] private byte stageID;
     [SerializeField] private new Renderer renderer;
 
@@ -118,5 +118,6 @@ public class PoolController : MonoBehaviour
             _collectedCount--;
             if (_collectedCount < 0) _collectedCount = 0;
         }
+
     }
 }

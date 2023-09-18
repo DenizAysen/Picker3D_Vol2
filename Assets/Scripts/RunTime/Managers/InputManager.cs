@@ -72,7 +72,7 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0) /*&& !_isPointerOverUIElement()*/)
         {
-            Debug.Log("Fareden el cekildi");
+            //Debug.Log("Fareden el cekildi");
             _isTouching = false;
             InputSignals.Instance.onInputReleased?.Invoke();
         }
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
             }
 
             _mousePosition = Input.mousePosition;
-            Debug.Log("Ekrana dokunuldu. Dokunulan pozisyon : " + _mousePosition);
+           // Debug.Log("Ekrana dokunuldu. Dokunulan pozisyon : " + _mousePosition);
         }
 
         if(Input.GetMouseButton(0) /*&& !_isPointerOverUIElement()*/)

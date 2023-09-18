@@ -10,7 +10,7 @@ public class UIPanelController : MonoBehaviour
     #region Seriliazed Variables
 
     [SerializeField] private List<Transform> layers = new();
-
+    [SerializeField] private GameObject uiRoot;
     #endregion
 
     #endregion
@@ -25,8 +25,9 @@ public class UIPanelController : MonoBehaviour
         if(CoreUISignals.Instance == null)
         {
             Debug.Log("CoreUISignals olusmadi");
+            CoreUISignals.Instance = uiRoot.AddComponent<CoreUISignals>();
         }
-
+        
         CoreUISignals.Instance.onClosePanel += OnClosePanel;
         CoreUISignals.Instance.onOpenPanel += OnOpenPanel;
         CoreUISignals.Instance.onCloseAllPanels += OnCloseAllPanels;
