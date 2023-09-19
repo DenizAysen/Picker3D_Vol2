@@ -29,18 +29,20 @@ public class PlayerPhysicsController : MonoBehaviour
             InputSignals.Instance.onDisableInput?.Invoke();
 
             DOVirtual.DelayedCall(3, () =>
-             {
-                 var result = other.transform.parent.GetComponentInChildren<PoolController>().TakeResults(manager.StageValue);
-                 
-                 if (result)
-                 {
-                     Debug.Log("Havuzdaki sonuc :" + result);
-                     CoreGameSignals.Instance.onStageAreaSuccessFull?.Invoke(manager.StageValue);
-                     InputSignals.Instance.onEnableInput?.Invoke();
-                 }
-                 else CoreGameSignals.Instance.onLevelFailed?.Invoke();
+            {
+                var result = other.transform.parent.GetComponentInChildren<PoolController>()
+                    .TakeResults(manager.StageValue);
 
-             });
+                if (result)
+                {
+                    CoreGameSignals.Instance.onStageAreaSuccessFull?.Invoke(manager.StageValue);
+                    InputSignals.Instance.onEnableInput?.Invoke();
+                }
+                else
+                {
+                    CoreGameSignals.Instance.onLevelFailed?.Invoke();
+                }
+            });
             return;
         }
         if (other.CompareTag(_finish))
@@ -60,7 +62,8 @@ public class PlayerPhysicsController : MonoBehaviour
         var position1 = transform1.position;
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
-        Gizmos.DrawSphere(new Vector3(position1.x+.1f, position1.y -1.5f, position1.z + 1.26f), 1.35f);
+        //Gizmos.DrawSphere(new Vector3(position1.x+.1f, position1.y -1.5f, position1.z + 1.26f), 1.35f);
+        Gizmos.DrawSphere(new Vector3(position1.x , position1.y , position1.z + 1f ), 1.5f);
     }
     public void OnReset()
     {

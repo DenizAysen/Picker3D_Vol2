@@ -79,6 +79,7 @@ public class LevelManager : MonoBehaviour
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+        CameraSignals.Instance.onSetCameraTarget?.Invoke();
     }
     private void UnSubscribeEvents()
     {

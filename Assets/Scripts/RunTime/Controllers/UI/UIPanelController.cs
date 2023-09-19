@@ -37,13 +37,14 @@ public class UIPanelController : MonoBehaviour
     {
         foreach (var layer in layers)
         {
-            if (layer.childCount <= 0) return;
+            if (layer.childCount <= 0) continue;
 #if UNITY_EDITOR
             DestroyImmediate(layer.GetChild(0).gameObject);
 #else
-            Destroy(layer.GetChild(0).gameObject);
+                Destroy(layer.GetChild(0).gameObject);
 #endif
         }
+        Debug.Log("Bu metod cagirildi");
     }
     [NaughtyAttributes.Button]
     private void OpenLevelPanel()

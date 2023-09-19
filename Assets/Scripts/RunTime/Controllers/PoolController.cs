@@ -98,13 +98,6 @@ public class PoolController : MonoBehaviour
     {
         _collectedCount++;
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag(_collectable)) return;
-        //DecreaseCollectedAmount();
-        ManageCollectedAmount(-1);
-        SetCollectedAmountToPool();
-    }
     private void DecreaseCollectedAmount()
     {
         _collectedCount--;
@@ -119,5 +112,22 @@ public class PoolController : MonoBehaviour
             if (_collectedCount < 0) _collectedCount = 0;
         }
 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag(_collectable)) return;
+        //DecreaseCollectedAmount();
+        ManageCollectedAmount(-1);
+        SetCollectedAmountToPool();
+    }
+    
+    private void UnSubscribeEvents()
+    {
+        CoreGameSignals.Instance.onStageAreaSuccessFull -= OnActivateAnimations;
+        CoreGameSignals.Instance.onStageAreaSuccessFull -= OnChangePoolColor;
+    }
+    private void OnDisable()
+    {
+        UnSubscribeEvents();
     }
 }

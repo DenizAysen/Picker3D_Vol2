@@ -14,15 +14,15 @@ public class ForceBallsToPoolCommand
     }
     internal void Execute()
     {
-        Debug.Log("pool command calisti");
+        
         var transform1 = _manager.transform;
         var position1 = transform1.position;
-        var forcePos = new Vector3(position1.x + .1f, position1.y - 1.5f, position1.z + 1.26f);
+        var forcePos = new Vector3(position1.x, position1.y, position1.z + 1f);
 
-        var colliders = Physics.OverlapSphere(forcePos, 1.35f);
+        var colliders = Physics.OverlapSphere(forcePos, 1.5f);
 
         var collectableColliderList = colliders.Where(col => col.CompareTag("Collectable")).ToList();
-        Debug.Log("Miknatista " + collectableColliderList.Count + " kadar top var");
+
         foreach (var col in collectableColliderList)
         {
             if (col.GetComponent<Rigidbody>() == null) continue;
