@@ -23,17 +23,23 @@ public class PoolController : MonoBehaviour
     private PoolData _data;
     private byte _collectedCount;
     private const string _collectable = "Collectable";
+    private Color _stageColor;
     #endregion
 
     #endregion
     private void Awake()
     {
         _data = GetPoolData();
+        _stageColor = GetStageColor();
     }
 
     private PoolData GetPoolData()
     {
         return Resources.Load<CD_Level>("Data/CD_Level").Levels[(int)CoreGameSignals.Instance.onGetLevelValue?.Invoke()].Pools[stageID];
+    }
+    private Color GetStageColor()
+    {
+        return Resources.Load<CD_Level>("Data/CD_Level").Levels[(int)CoreGameSignals.Instance.onGetLevelValue?.Invoke()].StageColor;
     }
 
     private void OnEnable()
@@ -50,8 +56,8 @@ public class PoolController : MonoBehaviour
     private void OnChangePoolColor(byte stageValue)
     {
         if (stageValue != stageID) return;
-        renderer.material.DOColor(new Color(0.16f, 0.6f, 0.176f), 1).SetEase(Ease.Linear);
-
+        renderer.material.DOColor(_stageColor, .75f).SetEase(Ease.Linear);
+        //ew Color(0.16f, 0.6f, 0.176f)
     }
 
     private void OnActivateAnimations(byte stageValue)

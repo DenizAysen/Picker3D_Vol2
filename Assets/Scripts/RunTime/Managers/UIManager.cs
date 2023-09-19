@@ -16,6 +16,12 @@ public class UIManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessfull += OnLevelSuccessfull;
         CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
         CoreGameSignals.Instance.onReset += OnReset;
+        CoreGameSignals.Instance.onStageAreaSuccessFull += OnStageAreaSuccessfull;
+    }
+
+    private void OnStageAreaSuccessfull(byte stageValue)
+    {
+        UISignals.Instance.onStageColor?.Invoke(stageValue);
     }
 
     private void OnReset()
@@ -45,6 +51,7 @@ public class UIManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessfull -= OnLevelSuccessfull;
         CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
         CoreGameSignals.Instance.onReset -= OnReset;
+        CoreGameSignals.Instance.onStageAreaSuccessFull -= OnStageAreaSuccessfull;
     }
     private void OnDisable()
     {
