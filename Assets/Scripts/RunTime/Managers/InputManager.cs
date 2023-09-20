@@ -13,9 +13,10 @@ public class InputManager : MonoBehaviour
     private InputData _data;
     private bool _isAvaibleForTouch, _isFirstTimeTouchTaken,_isTouching;
 
-    private float _currentVelocity;
-    private float3 _moveVector;
+    //private float _currentVelocity;
+    //private float3 _moveVector;
     private Vector2? _mousePosition;
+    private SetHorizontalInputCommand _inputCommand;
     #endregion
 
     #endregion
@@ -23,11 +24,16 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         _data = GetInputData();
+        Init();
     }
 
     private InputData GetInputData()
     {
         return Resources.Load<CD_Input>("Data/CD_Input").Data;
+    }
+    private void Init()
+    {
+        _inputCommand = new SetHorizontalInputCommand(this, _data);
     }
     private void OnEnable()
     {
@@ -72,7 +78,6 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0) /*&& !_isPointerOverUIElement()*/)
         {
-            //Debug.Log("Fareden el cekildi");
             _isTouching = false;
             InputSignals.Instance.onInputReleased?.Invoke();
         }
@@ -88,7 +93,6 @@ public class InputManager : MonoBehaviour
             }
 
             _mousePosition = Input.mousePosition;
-           // Debug.Log("Ekrana dokunuldu. Dokunulan pozisyon : " + _mousePosition);
         }
 
         if(Input.GetMouseButton(0) /*&& !_isPointerOverUIElement()*/)
@@ -101,27 +105,29 @@ public class InputManager : MonoBehaviour
 
                     Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - _mousePosition.Value;
 
-                    if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
-                    {
-                        _moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
-                    }
-                    else if (mouseDeltaPos.x < _data.HorizontalInputSpeed)
-                    {
-                        _moveVector.x = -_data.HorizontalInputSpeed / 10f * -mouseDeltaPos.x;
-                    }
-                    else
-                    {
-                        _moveVector.x = Mathf.SmoothDamp(-_moveVector.x, 0f, ref _currentVelocity, _data.ClampSpeed);
-                    }
-                    // Debug.Log(_moveVector.x);
-                    _moveVector.x = mouseDeltaPos.x;
+                    //if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
+                    //{
+                    //    _moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
+                    //}
+                    //else if (mouseDeltaPos.x < _data.HorizontalInputSpeed)
+                    //{
+                    //    _moveVector.x = -_data.HorizontalInputSpeed / 10f * -mouseDeltaPos.x;
+                    //}
+                    //else
+                    //{
+                    //    _moveVector.x = Mathf.SmoothDamp(-_moveVector.x, 0f, ref _currentVelocity, _data.ClampSpeed);
+                    //}
+                    //InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams
+                    //{
+                    //    HorziontalValue = _moveVector.x,
+                    //    ClampValues = _data.ClampValues
+                    //});
+                    _inputCommand.Execute(mouseDeltaPos);
+                    
+                  //  _moveVector.x = mouseDeltaPos.x;
                     _mousePosition = Input.mousePosition;
 
-                    InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams
-                    {
-                        HorziontalValue = _moveVector.x,
-                        ClampValues = _data.ClampValues
-                    });
+                   
                 }
             }
         }

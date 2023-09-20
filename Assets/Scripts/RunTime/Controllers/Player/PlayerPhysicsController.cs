@@ -49,7 +49,7 @@ public class PlayerPhysicsController : MonoBehaviour
         {
             CoreGameSignals.Instance.onFinishAreaEntered?.Invoke();
             InputSignals.Instance.onDisableInput?.Invoke();
-            CoreGameSignals.Instance.onLevelSuccessfull?.Invoke();
+           // CoreGameSignals.Instance.onLevelSuccessfull?.Invoke();
             return;
         }
 
@@ -63,7 +63,7 @@ public class PlayerPhysicsController : MonoBehaviour
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
         //Gizmos.DrawSphere(new Vector3(position1.x+.1f, position1.y -1.5f, position1.z + 1.26f), 1.35f);
-        Gizmos.DrawSphere(new Vector3(position1.x , position1.y , position1.z + 1f ), 1.5f);
+        Gizmos.DrawSphere(new Vector3(position1.x , position1.y , position1.z + 1.25f ), 1.75f);
     }
     public void OnReset()
     {

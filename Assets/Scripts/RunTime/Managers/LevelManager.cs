@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour
     
     public byte OnGetLevelValue() 
     { 
-        return (byte)_currentLevel; 
+        return (byte)(_currentLevel % totalLevelCount); 
     }
     private void OnNextLevel()
     {
@@ -73,6 +73,7 @@ public class LevelManager : MonoBehaviour
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+        CameraSignals.Instance.onSetCameraTarget?.Invoke();
     }
     private void OnRestartLevel()
     {
