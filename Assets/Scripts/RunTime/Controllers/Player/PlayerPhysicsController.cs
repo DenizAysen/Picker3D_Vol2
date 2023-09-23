@@ -30,11 +30,12 @@ public class PlayerPhysicsController : MonoBehaviour
 
             DOVirtual.DelayedCall(3, () =>
             {
-                var result = other.transform.parent.GetComponentInChildren<PoolController>()
-                    .TakeResults(manager.StageValue);
+                PoolController poolController = other.transform.parent.GetComponentInChildren<PoolController>();
+                var result = poolController.TakeResults(manager.StageValue);
 
                 if (result)
                 {
+                    CoreGameSignals.Instance.onIncreaseCollectedCount?.Invoke(poolController.GetCollectedCount());
                     CoreGameSignals.Instance.onStageAreaSuccessFull?.Invoke(manager.StageValue);
                     InputSignals.Instance.onEnableInput?.Invoke();
                 }
@@ -63,7 +64,7 @@ public class PlayerPhysicsController : MonoBehaviour
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
         //Gizmos.DrawSphere(new Vector3(position1.x+.1f, position1.y -1.5f, position1.z + 1.26f), 1.35f);
-        Gizmos.DrawSphere(new Vector3(position1.x , position1.y , position1.z + 1.25f ), 1.75f);
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + 1.25f), 1.75f);
     }
     public void OnReset()
     {

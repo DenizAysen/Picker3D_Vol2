@@ -110,6 +110,9 @@ public class PlayerManager : MonoBehaviour
     {
         StageValue = (byte)++value;
         movementController.IsReadyToPlay(true);
+        meshController.ScaleUpPlayer();
+        meshController.PlayConfettiParticle();
+        meshController.ShowUpText();
     }
 
     private void OnReset()

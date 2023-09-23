@@ -119,6 +119,10 @@ public class PoolController : MonoBehaviour
         }
 
     }
+    public byte GetCollectedCount()
+    {
+        return _collectedCount;
+    }
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag(_collectable)) return;

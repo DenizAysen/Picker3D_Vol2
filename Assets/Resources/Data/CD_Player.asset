@@ -17,7 +17,7 @@ MonoBehaviour:
       ForwardSpeed: 6
       SideWaySpeed: 5
     MeshData:
-      ScaleCounter: 1.2
+      ScaleCounter: 1.1
     ForceData:
       ForceParameters:
         x: 0

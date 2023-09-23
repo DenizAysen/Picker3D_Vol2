@@ -30,4 +30,5 @@ public class CoreGameSignals : MonoBehaviour
     public UnityAction onStageAreaEntered = delegate { };
     public UnityAction<byte> onStageAreaSuccessFull = delegate { };
     public UnityAction onFinishAreaEntered = delegate { };
+    public UnityAction<byte> onIncreaseCollectedCount = delegate { };
 }

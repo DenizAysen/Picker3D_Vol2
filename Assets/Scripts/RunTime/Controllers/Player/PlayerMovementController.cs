@@ -40,7 +40,7 @@ public class PlayerMovementController : MonoBehaviour
             StopPlayer();
             return;
         }
-        if (_isReadyToPlay)
+        if (_isReadyToMove)
         {
             MovePlayer();
         }

@@ -7,4 +7,5 @@ public struct LevelData
 {
     public List<PoolData> Pools;
     public Color StageColor;
+    public short TotalSpawnedCollectableCount;
 }

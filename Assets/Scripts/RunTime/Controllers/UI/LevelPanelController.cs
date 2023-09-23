@@ -14,6 +14,17 @@ public class LevelPanelController : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> levelTexts = new();
     [SerializeField] private Color targetStageColor;
 
+    [Header("Percentage Bar")]
+    [SerializeField] private Slider slider;
+    [SerializeField] private Gradient gradient;
+    [SerializeField] private Image fillImage;
+    [SerializeField] private TextMeshProUGUI percentageText;
+    #endregion
+
+    #region Private Variables
+
+    private string percentage = "%";
+
     #endregion
 
     #endregion
@@ -26,6 +37,7 @@ public class LevelPanelController : MonoBehaviour
     {
         UISignals.Instance.onSetLevelValue += OnSetLevelValues;
         UISignals.Instance.onStageColor += OnSetStageColor;
+        UISignals.Instance.onSetFillValue += OnSetFillValue;
     }
     [NaughtyAttributes.Button]
     private void OnSetStageColor0()
@@ -55,10 +67,24 @@ public class LevelPanelController : MonoBehaviour
         additionalValue++;
         levelTexts[1].text = additionalValue.ToString();
     }
+    private void OnSetFillValue(float collectedValue)
+    {
+        slider.DOValue(collectedValue, .75f).OnComplete(() => ChangePercentageText(slider.value*100));
+       // Debug.Log("Slider "+slider.normalizedValue);
+        //percentageText.text = "" + (slider.value * 100f);
+        //slider.value = collectedValue;
+        fillImage.color = gradient.Evaluate(slider.value);
+    }
+    private void ChangePercentageText(float value)
+    {
+        Debug.Log(slider.value);
+        percentageText.text = percentage + value.ToString("0");
+    }
     private void UnSubscribeEvents()
     {
         UISignals.Instance.onSetLevelValue -= OnSetLevelValues;
         UISignals.Instance.onStageColor -= OnSetStageColor;
+        UISignals.Instance.onSetFillValue -= OnSetFillValue;
     }
     private void OnDisable()
     {

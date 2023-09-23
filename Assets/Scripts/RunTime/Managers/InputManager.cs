@@ -61,6 +61,7 @@ public class InputManager : MonoBehaviour
     private void OnDisableInput()
     {
         _isAvaibleForTouch = false;
+        ResetInput();
     }
     private void UnSubscribeEvents()
     {
@@ -131,6 +132,14 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
+    }
+    private void ResetInput()
+    {
+        InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams
+        {
+            HorziontalValue = 0,
+            ClampValues = _data.ClampValues
+        });
     }
 
     //private bool _isPointerOverUIElement()
