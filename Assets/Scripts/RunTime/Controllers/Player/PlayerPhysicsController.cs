@@ -16,6 +16,7 @@ public class PlayerPhysicsController : MonoBehaviour
 
     private const string _stageArea = "StageArea";
     private const string _finish = "Finish";
+    private const string _miniGameArea = "MiniGameArea";
     #endregion
 
     #endregion
@@ -53,7 +54,11 @@ public class PlayerPhysicsController : MonoBehaviour
            // CoreGameSignals.Instance.onLevelSuccessfull?.Invoke();
             return;
         }
-
+        if (other.CompareTag(_miniGameArea))
+        {
+            MiniGameSignals.Instance.onMiniGameAreaEntered?.Invoke();
+            return;
+        }
         //Odev olarak mini game yapilacak
     }
     private void OnDrawGizmos()

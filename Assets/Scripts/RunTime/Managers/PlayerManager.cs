@@ -69,6 +69,8 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaSuccessFull += OnStageAreaSuccessFull;
         CoreGameSignals.Instance.onFinishAreaEntered += OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset += OnReset;
+        MiniGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
+        MiniGameSignals.Instance.onsetRewardAreaPosition += movementController.MovePlayerToTargetedZPos;
     }
     private void OnPlay()
     {
@@ -97,6 +99,11 @@ public class PlayerManager : MonoBehaviour
     {
         CoreGameSignals.Instance.onLevelSuccessfull?.Invoke();
         // Mini Game
+    }
+    private void OnMiniGameAreaEntered()
+    {
+        movementController.IsReadyToMove(false);
+        movementController.InMiniGameArea(true);
     }
     private void OnLevelSuccessFull()
     {
@@ -134,6 +141,8 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaSuccessFull -= OnStageAreaSuccessFull;
         CoreGameSignals.Instance.onFinishAreaEntered -= OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset -= OnReset;
+        MiniGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
+        MiniGameSignals.Instance.onsetRewardAreaPosition += movementController.MovePlayerToTargetedZPos;
     }
     private void OnDisable()
     {

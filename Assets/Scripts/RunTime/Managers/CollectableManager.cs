@@ -32,7 +32,13 @@ public class CollectableManager : MonoBehaviour
         float y = _totalSpawnedCollectableCount;
         //Debug.Log((x / y));
         UISignals.Instance.onSetFillValue?.Invoke(x/y);
-        Debug.Log(_collectedCollectableCount + " tane kure toplandi");
+    }
+    private float ReturnCollectedPercentage()
+    {
+        float x = _collectedCollectableCount;
+        float y = _totalSpawnedCollectableCount;
+        float percentage = (x / y) * 100f;
+        return percentage;
     }
     private void OnReset()
     {
@@ -42,11 +48,13 @@ public class CollectableManager : MonoBehaviour
     {
         CoreGameSignals.Instance.onIncreaseCollectedCount += OnIncreaseCollectedCount;
         CoreGameSignals.Instance.onReset += OnReset;
+        MiniGameSignals.Instance.onGetCollectedPercentageValue += ReturnCollectedPercentage;
     }
     private void UnSubscribeEvents()
     {
         CoreGameSignals.Instance.onIncreaseCollectedCount -= OnIncreaseCollectedCount;
         CoreGameSignals.Instance.onReset -= OnReset;
+        MiniGameSignals.Instance.onGetCollectedPercentageValue -= ReturnCollectedPercentage;
     }
     private void OnDisable()
     {

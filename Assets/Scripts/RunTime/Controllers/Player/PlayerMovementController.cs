@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-
+using DG.Tweening;
 public class PlayerMovementController : MonoBehaviour
 {
 
@@ -19,7 +19,7 @@ public class PlayerMovementController : MonoBehaviour
     #region Private Variables
 
     private PlayerMovementData _data;
-    private bool _isReadyToMove, _isReadyToPlay;
+    private bool _isReadyToMove, _isReadyToPlay, _inMiniGameArea;
     private float _xValue;
 
     private float2 _clampValues;
@@ -40,14 +40,21 @@ public class PlayerMovementController : MonoBehaviour
             StopPlayer();
             return;
         }
-        if (_isReadyToMove)
+        if (_inMiniGameArea)
         {
-            MovePlayer();
+            MovePlayerHorizontally();
         }
         else
         {
-            StopPlayerHorizontally();
-        }
+            if (_isReadyToMove)
+            {
+                MovePlayer();
+            }
+            else
+            {
+                StopPlayerHorizontally();
+            }
+        }       
     }
     private void StopPlayer()
     {
@@ -70,7 +77,26 @@ public class PlayerMovementController : MonoBehaviour
             (position = rigidbody.position).y , position.z);
         rigidbody.position = position;
     }
-
+    private void MovePlayerHorizontally()
+    {
+        var velocity = rigidbody.velocity;
+        velocity = new Vector3(_xValue * _data.SideWaySpeed, velocity.y, 0);
+        rigidbody.velocity = velocity;
+        Debug.Log(rigidbody.velocity);
+        var position1 = rigidbody.position;
+        Vector3 position;
+        position = new Vector3(Mathf.Clamp(position1.x, _clampValues.x, _clampValues.y),
+            (position = rigidbody.position).y, position.z);
+        rigidbody.position = position;
+    }
+    internal void MovePlayerToTargetedZPos(float zValue)
+    {
+        transform.DOMoveZ(zValue, 1f);
+    }
+    private void MovePlayerToTargetedLocation(Vector3 targetedPos)
+    {
+        transform.DOMove(targetedPos, 1f);
+    }
     internal void IsReadyToPlay(bool condition)
     {
         _isReadyToPlay = condition;
@@ -79,7 +105,10 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isReadyToMove = condition;
     }
-
+    internal void InMiniGameArea(bool condition)
+    {
+        _inMiniGameArea = condition;
+    }
     internal void UpdateInputParams(HorizontalInputParams inputParams)
     {
         _xValue = inputParams.HorziontalValue;

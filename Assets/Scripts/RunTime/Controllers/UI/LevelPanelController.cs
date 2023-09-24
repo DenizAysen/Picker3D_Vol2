@@ -77,7 +77,6 @@ public class LevelPanelController : MonoBehaviour
     }
     private void ChangePercentageText(float value)
     {
-        Debug.Log(slider.value);
         percentageText.text = percentage + value.ToString("0");
     }
     private void UnSubscribeEvents()
