@@ -9,6 +9,7 @@ TagManager:
   - Collectable
   - Collectible
   - MiniGameArea
+  - Reward
   layers:
   - Default
   - TransparentFX

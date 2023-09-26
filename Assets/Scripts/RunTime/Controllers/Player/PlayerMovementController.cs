@@ -82,7 +82,6 @@ public class PlayerMovementController : MonoBehaviour
         var velocity = rigidbody.velocity;
         velocity = new Vector3(_xValue * _data.SideWaySpeed, velocity.y, 0);
         rigidbody.velocity = velocity;
-        Debug.Log(rigidbody.velocity);
         var position1 = rigidbody.position;
         Vector3 position;
         position = new Vector3(Mathf.Clamp(position1.x, _clampValues.x, _clampValues.y),

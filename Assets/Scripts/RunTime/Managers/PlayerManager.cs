@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public byte StageValue;
 
     internal ForceBallsToPoolCommand ForceCommand;
+    internal GiveRewardCommand GiveReward;
 
     #endregion
 
@@ -40,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     private void Init()
     {
         ForceCommand = new ForceBallsToPoolCommand(this, _data.ForceData);
+        GiveReward = new GiveRewardCommand(this);
     }
 
     private void SendDataToControllers()
