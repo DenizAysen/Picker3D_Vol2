@@ -17,7 +17,7 @@ public class PlayerPhysicsController : MonoBehaviour
     private const string _stageArea = "StageArea";
     private const string _finish = "Finish";
     private const string _miniGameArea = "MiniGameArea";
-    private const string _reward = "Reward";
+    
     #endregion
 
     #endregion
@@ -60,12 +60,12 @@ public class PlayerPhysicsController : MonoBehaviour
             MiniGameSignals.Instance.onMiniGameAreaEntered?.Invoke();
             return;
         }
-        if (other.CompareTag(_reward))
-        {
-            // burasi gecici movement controllerda tek seferde cagirilacak
-            manager.GiveReward.Execute();         
-            return;
-        }
+        //if (other.CompareTag(_reward))
+        //{
+        //    // burasi gecici movement controllerda tek seferde cagirilacak
+        //    manager.GiveRewardCommmand.Execute();         
+        //    return;
+        //}
         //Odev olarak mini game yapilacak
     }
     private void OnDrawGizmos()
@@ -76,8 +76,9 @@ public class PlayerPhysicsController : MonoBehaviour
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
         
-        Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + 1.25f), 1.75f);
-       // Gizmos.DrawCube(new Vector3(position1.x, position1.y, position1.z+.9f), Vector3.one*2.5f);
+        //Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + 1.25f), 1.75f);
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z +.76f), 1.4f);
+        //Gizmos.DrawCube(new Vector3(position1.x, position1.y, position1.z+.9f), Vector3.one*2.5f);
     }
     public void OnReset()
     {

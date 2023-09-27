@@ -44,7 +44,7 @@ public class UIPanelController : MonoBehaviour
                 Destroy(layer.GetChild(0).gameObject);
 #endif
         }
-        Debug.Log("Bu metod cagirildi");
+        
     }
     [NaughtyAttributes.Button]
     private void OpenLevelPanel()

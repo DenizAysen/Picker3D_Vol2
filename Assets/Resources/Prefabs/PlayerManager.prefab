@@ -842,6 +842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 4207319572050334295}
+  manager: {fileID: 598068146994406507}
 --- !u!54 &4207319572050334295
 Rigidbody:
   m_ObjectHideFlags: 0

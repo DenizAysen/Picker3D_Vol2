@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     public byte StageValue;
 
     internal ForceBallsToPoolCommand ForceCommand;
-    internal GiveRewardCommand GiveReward;
+    internal GiveRewardCommand GiveRewardCommmand;
 
     #endregion
 
@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     private void Init()
     {
         ForceCommand = new ForceBallsToPoolCommand(this, _data.ForceData);
-        GiveReward = new GiveRewardCommand(this);
+        GiveRewardCommmand = new GiveRewardCommand(this);
     }
 
     private void SendDataToControllers()
@@ -72,7 +72,8 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onFinishAreaEntered += OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset += OnReset;
         MiniGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
-        MiniGameSignals.Instance.onsetRewardAreaPosition += movementController.MovePlayerToTargetedZPos;
+        MiniGameSignals.Instance.onSetRewardAreaPosition += movementController.MovePlayerToTargetedZPos;
+        MiniGameSignals.Instance.onMoveToNextLevel += movementController.MovePlayerToTargetedLocation;
     }
     private void OnPlay()
     {
@@ -144,7 +145,8 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onFinishAreaEntered -= OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset -= OnReset;
         MiniGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
-        MiniGameSignals.Instance.onsetRewardAreaPosition += movementController.MovePlayerToTargetedZPos;
+        MiniGameSignals.Instance.onSetRewardAreaPosition -= movementController.MovePlayerToTargetedZPos;
+        MiniGameSignals.Instance.onMoveToNextLevel -= movementController.MovePlayerToTargetedLocation;
     }
     private void OnDisable()
     {

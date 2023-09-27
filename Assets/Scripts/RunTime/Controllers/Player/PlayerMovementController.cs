@@ -12,6 +12,7 @@ public class PlayerMovementController : MonoBehaviour
     #region Serialized Variables
 
     [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private PlayerManager manager;
     // [SerializeField] private new Collider collider;
 
     #endregion
@@ -19,7 +20,7 @@ public class PlayerMovementController : MonoBehaviour
     #region Private Variables
 
     private PlayerMovementData _data;
-    private bool _isReadyToMove, _isReadyToPlay, _inMiniGameArea;
+    private bool _isReadyToMove, _isReadyToPlay, _inMiniGameArea, _hasRewardGiven;
     private float _xValue;
 
     private float2 _clampValues;
@@ -42,6 +43,7 @@ public class PlayerMovementController : MonoBehaviour
         }
         if (_inMiniGameArea)
         {
+            if (_hasRewardGiven) return;
             MovePlayerHorizontally();
         }
         else
@@ -90,11 +92,14 @@ public class PlayerMovementController : MonoBehaviour
     }
     internal void MovePlayerToTargetedZPos(float zValue)
     {
-        transform.DOMoveZ(zValue, 1f);
+        transform.DOMoveZ(zValue, 1f).OnComplete(() => manager.GiveRewardCommmand.Execute());
     }
-    private void MovePlayerToTargetedLocation(Vector3 targetedPos)
+    internal void MovePlayerToTargetedLocation(Vector3 targetedPos)
     {
-        transform.DOMove(targetedPos, 1f);
+        //InMiniGameArea(false);
+        _hasRewardGiven = true;
+        var _targetedPos = new Vector3(targetedPos.x, transform.position.y, targetedPos.z);
+        transform.DOMove(_targetedPos, 3f);
     }
     internal void IsReadyToPlay(bool condition)
     {

@@ -16,9 +16,9 @@ public class GiveRewardCommand
         Debug.Log("Command calisiyor");
         var transform1 = _manager.transform;
         var position1 = transform1.position;
-        var forcePos = new Vector3(position1.x, position1.y, position1.z + .9f);
+        var forcePos = new Vector3(position1.x, position1.y, position1.z + .76f);
 
-        var colliders = Physics.OverlapBox(forcePos, Vector3.one * 2.5f);
+        var colliders = Physics.OverlapSphere(forcePos, 1.4f);
 
         var rewardColliderList = colliders.Where(col => col.CompareTag("Reward")).ToList();
         
@@ -31,6 +31,7 @@ public class GiveRewardCommand
             
         }
         short _maxValue = values.Max();
+        MiniGameSignals.Instance.onGetReward?.Invoke(_maxValue);
         Debug.Log(_maxValue + " elmas kazanildi");
     }
 }

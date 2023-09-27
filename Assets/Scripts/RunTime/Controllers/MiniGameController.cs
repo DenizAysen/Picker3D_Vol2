@@ -9,8 +9,8 @@ public class MiniGameController : MonoBehaviour
 
     #region Serialized Variables
 
-    [SerializeField] private Transform startPos, endPos;
-
+    [SerializeField] private Transform startPos, endPos, finishPos;
+    [SerializeField] private List<RewardController> rewardControllers = new();
     #endregion
 
     #endregion
@@ -21,6 +21,7 @@ public class MiniGameController : MonoBehaviour
     private void SubscribeEvents()
     {
         MiniGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
+        MiniGameSignals.Instance.onGetReward += OnGetReward;
     }
 
     private void OnMiniGameAreaEntered()
@@ -35,7 +36,16 @@ public class MiniGameController : MonoBehaviour
         Debug.Log("Yuzdelik : " + _percentage);
         float distance = endPos.position.z - startPos.position.z;
         float targetZPos = ((distance * _percentage) / 100f) + startPos.position.z;
-        MiniGameSignals.Instance.onsetRewardAreaPosition?.Invoke(targetZPos);
+        MiniGameSignals.Instance.onSetRewardAreaPosition?.Invoke(targetZPos);
+    }
+    private void OnGetReward(short winningRewardValue)
+    {
+        foreach (var reward in rewardControllers)
+        {
+            if (reward.GetRewardValue() == winningRewardValue) continue;
+            reward.gameObject.SetActive(false);
+        }
+        StartCoroutine(MoveToNextLevel());
     }
     private void OnDisable()
     {
@@ -45,5 +55,11 @@ public class MiniGameController : MonoBehaviour
     private void UnSubscribeEvents()
     {
         MiniGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
+        MiniGameSignals.Instance.onGetReward -= OnGetReward;
+    }
+    private IEnumerator MoveToNextLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        MiniGameSignals.Instance.onMoveToNextLevel?.Invoke(finishPos.position);
     }
 }

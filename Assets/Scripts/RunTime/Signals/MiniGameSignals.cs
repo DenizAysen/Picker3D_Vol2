@@ -20,7 +20,9 @@ public class MiniGameSignals : MonoBehaviour
     }
     #endregion
     public UnityAction onMiniGameAreaEntered = delegate { };
-    public UnityAction<float> onsetRewardAreaPosition= delegate { };
+    public UnityAction<float> onSetRewardAreaPosition= delegate { };
     public Func<float> onGetCollectedPercentageValue = delegate { return 0; };
+    public UnityAction<short> onGetReward = delegate { };
+    public UnityAction<Vector3> onMoveToNextLevel = delegate { };
     public UnityAction onMiniGameAreaSuccessFull = delegate { };
 }

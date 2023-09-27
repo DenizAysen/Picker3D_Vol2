@@ -13,6 +13,7 @@ public class LevelPanelController : MonoBehaviour
     [SerializeField] private List<Image> stageImages = new List<Image>();
     [SerializeField] private List<TextMeshProUGUI> levelTexts = new();
     [SerializeField] private Color targetStageColor;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("Percentage Bar")]
     [SerializeField] private Slider slider;
@@ -38,6 +39,7 @@ public class LevelPanelController : MonoBehaviour
         UISignals.Instance.onSetLevelValue += OnSetLevelValues;
         UISignals.Instance.onStageColor += OnSetStageColor;
         UISignals.Instance.onSetFillValue += OnSetFillValue;
+        MiniGameSignals.Instance.onGetReward += OnGetReward;
     }
     [NaughtyAttributes.Button]
     private void OnSetStageColor0()
@@ -75,6 +77,10 @@ public class LevelPanelController : MonoBehaviour
         //slider.value = collectedValue;
         fillImage.color = gradient.Evaluate(slider.value);
     }
+    private void OnGetReward(short rewardValue)
+    {
+        scoreText.text = rewardValue.ToString();
+    }
     private void ChangePercentageText(float value)
     {
         percentageText.text = percentage + value.ToString("0");
@@ -84,6 +90,7 @@ public class LevelPanelController : MonoBehaviour
         UISignals.Instance.onSetLevelValue -= OnSetLevelValues;
         UISignals.Instance.onStageColor -= OnSetStageColor;
         UISignals.Instance.onSetFillValue -= OnSetFillValue;
+        MiniGameSignals.Instance.onGetReward -= OnGetReward;
     }
     private void OnDisable()
     {

@@ -20,9 +20,11 @@ MonoBehaviour:
     StageColor: {r: 0.11372549, g: 0.08235294, b: 0.9137255, a: 1}
     TotalSpawnedCollectableCount: 70
   - Pools:
-    - RequiredObjectCount: 0
-    StageColor: {r: 0, g: 0, b: 0, a: 0}
-    TotalSpawnedCollectableCount: 0
+    - RequiredObjectCount: 10
+    - RequiredObjectCount: 20
+    - RequiredObjectCount: 30
+    StageColor: {r: 1, g: 0.6, b: 0, a: 1}
+    TotalSpawnedCollectableCount: 70
   - Pools:
     - RequiredObjectCount: 0
     StageColor: {r: 0, g: 0, b: 0, a: 0}

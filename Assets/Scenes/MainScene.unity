@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelHolder: {fileID: 415770924}
-  totalLevelCount: 1
+  totalLevelCount: 2
   gameSignals: {fileID: 1726565707}
 --- !u!1 &981258191
 GameObject:

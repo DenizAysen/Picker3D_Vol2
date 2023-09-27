@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -67,13 +68,14 @@ public class LevelManager : MonoBehaviour
     { 
         return (byte)(_currentLevel % totalLevelCount); 
     }
+    [NaughtyAttributes.Button]
     private void OnNextLevel()
     {
         _currentLevel++;
+        
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
-        CameraSignals.Instance.onSetCameraTarget?.Invoke();
+        StartCoroutine(LoadNextlevel());
     }
     private void OnRestartLevel()
     {
@@ -97,7 +99,16 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte) (_currentLevel % totalLevelCount));
+        //Debug.Log((_currentLevel + 1) % totalLevelCount);
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)((_currentLevel+1) % totalLevelCount));
         CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
     }
-    
+
+    private IEnumerator LoadNextlevel()
+    {
+        yield return new WaitForSeconds(.1f);
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)((_currentLevel + 1) % totalLevelCount));
+        CameraSignals.Instance.onSetCameraTarget?.Invoke();
+    }
 }
