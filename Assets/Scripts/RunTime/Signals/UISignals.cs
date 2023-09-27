@@ -21,6 +21,8 @@ public class UISignals : MonoBehaviour
 
     public UnityAction<byte> onStageColor = delegate { };
     public UnityAction<byte> onSetLevelValue = delegate { };
-    public UnityAction<float> onSetFillValue = delegate { };
+    public UnityAction<float> onIncreaseFillValue = delegate { };
+    public UnityAction<float> onDecreaseFillValue = delegate { };
+    public UnityAction onResetStageColors = delegate { };
     public UnityAction onPlay = delegate { };
 }

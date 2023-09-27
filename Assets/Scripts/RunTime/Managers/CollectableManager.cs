@@ -31,7 +31,7 @@ public class CollectableManager : MonoBehaviour
         float x = _collectedCollectableCount;
         float y = _totalSpawnedCollectableCount;
         //Debug.Log((x / y));
-        UISignals.Instance.onSetFillValue?.Invoke(x/y);
+        UISignals.Instance.onIncreaseFillValue?.Invoke(x/y);
     }
     private float ReturnCollectedPercentage()
     {

@@ -25,7 +25,3 @@ MonoBehaviour:
     - RequiredObjectCount: 30
     StageColor: {r: 1, g: 0.6, b: 0, a: 1}
     TotalSpawnedCollectableCount: 70
-  - Pools:
-    - RequiredObjectCount: 0
-    StageColor: {r: 0, g: 0, b: 0, a: 0}
-    TotalSpawnedCollectableCount: 0

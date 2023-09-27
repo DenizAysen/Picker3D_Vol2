@@ -38,7 +38,9 @@ public class LevelPanelController : MonoBehaviour
     {
         UISignals.Instance.onSetLevelValue += OnSetLevelValues;
         UISignals.Instance.onStageColor += OnSetStageColor;
-        UISignals.Instance.onSetFillValue += OnSetFillValue;
+        UISignals.Instance.onIncreaseFillValue += OnIncreaseFillValue;
+        UISignals.Instance.onDecreaseFillValue += OnDecreaseFillValue;
+        UISignals.Instance.onResetStageColors += OnResetStageColors;
         MiniGameSignals.Instance.onGetReward += OnGetReward;
     }
     [NaughtyAttributes.Button]
@@ -61,7 +63,13 @@ public class LevelPanelController : MonoBehaviour
     {
         stageImages[stageValue].DOColor(targetStageColor, 0.5f);
     }
-
+    private void OnResetStageColors()
+    {
+        for (int i = 0; i < stageImages.Count; i++)
+        {
+            stageImages[i].color = Color.white;
+        }
+    }
     private void OnSetLevelValues(byte levelValue)
     {
         var additionalValue = ++levelValue;
@@ -69,12 +77,14 @@ public class LevelPanelController : MonoBehaviour
         additionalValue++;
         levelTexts[1].text = additionalValue.ToString();
     }
-    private void OnSetFillValue(float collectedValue)
+    private void OnIncreaseFillValue(float collectedValue)
     {
         slider.DOValue(collectedValue, .75f).OnComplete(() => ChangePercentageText(slider.value*100));
-       // Debug.Log("Slider "+slider.normalizedValue);
-        //percentageText.text = "" + (slider.value * 100f);
-        //slider.value = collectedValue;
+        fillImage.color = gradient.Evaluate(slider.value);
+    }
+    private void OnDecreaseFillValue(float collectedValue)
+    {
+        slider.DOValue(collectedValue, 1f).OnComplete(() => ChangePercentageText(slider.value * 100));
         fillImage.color = gradient.Evaluate(slider.value);
     }
     private void OnGetReward(short rewardValue)
@@ -89,7 +99,9 @@ public class LevelPanelController : MonoBehaviour
     {
         UISignals.Instance.onSetLevelValue -= OnSetLevelValues;
         UISignals.Instance.onStageColor -= OnSetStageColor;
-        UISignals.Instance.onSetFillValue -= OnSetFillValue;
+        UISignals.Instance.onIncreaseFillValue -= OnIncreaseFillValue;
+        UISignals.Instance.onResetStageColors -= OnResetStageColors;
+        UISignals.Instance.onDecreaseFillValue -= OnDecreaseFillValue;
         MiniGameSignals.Instance.onGetReward -= OnGetReward;
     }
     private void OnDisable()
@@ -97,14 +109,4 @@ public class LevelPanelController : MonoBehaviour
         UnSubscribeEvents();
     }
 
-    //IEnumerator ChangeColor(Image image)
-    //{
-    //    int counter = 0;
-    //    while(counter <100 )
-    //    yield return new WaitForSeconds(.5f);
-    //}
-    //private void ChangeStageColor(Image image)
-    //{
-    //    image.color = Color.Lerp(image.color, targetStageColor, .5f);
-    //}
 }

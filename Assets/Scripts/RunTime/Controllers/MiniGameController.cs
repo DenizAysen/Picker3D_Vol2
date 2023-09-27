@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class MiniGameController : MonoBehaviour
 
     [SerializeField] private Transform startPos, endPos, finishPos;
     [SerializeField] private List<RewardController> rewardControllers = new();
+    [SerializeField] private List<DOTweenAnimation> tweens = new List<DOTweenAnimation>();
+
     #endregion
 
     #endregion
@@ -22,21 +25,26 @@ public class MiniGameController : MonoBehaviour
     {
         MiniGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
         MiniGameSignals.Instance.onGetReward += OnGetReward;
+        MiniGameSignals.Instance.onMiniGameAreaSuccessFull += OnActivateAnimations;
     }
 
     private void OnMiniGameAreaEntered()
     {
+        UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelValue?.Invoke() + 1));
+        UISignals.Instance.onResetStageColors?.Invoke();
         TargetZPos(MiniGameSignals.Instance.onGetCollectedPercentageValue?.Invoke());
     }
 
     private void TargetZPos(float? percentage)
     {
+        
         Debug.Log("Donusmeden onceki yuzdelik : " + percentage);
         int _percentage = Convert.ToInt32(percentage);
         Debug.Log("Yuzdelik : " + _percentage);
         float distance = endPos.position.z - startPos.position.z;
         float targetZPos = ((distance * _percentage) / 100f) + startPos.position.z;
         MiniGameSignals.Instance.onSetRewardAreaPosition?.Invoke(targetZPos);
+        UISignals.Instance.onDecreaseFillValue?.Invoke(0);
     }
     private void OnGetReward(short winningRewardValue)
     {
@@ -47,6 +55,19 @@ public class MiniGameController : MonoBehaviour
         }
         StartCoroutine(MoveToNextLevel());
     }
+    private IEnumerator MoveToNextLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        MiniGameSignals.Instance.onMoveToNextLevel?.Invoke(finishPos.position);
+        MiniGameSignals.Instance.onMiniGameAreaSuccessFull?.Invoke();
+    }
+    private void OnActivateAnimations()
+    {
+        foreach (var tween in tweens)
+        {
+            tween.DOPlay();
+        }
+    }
     private void OnDisable()
     {
         UnSubscribeEvents();
@@ -56,10 +77,6 @@ public class MiniGameController : MonoBehaviour
     {
         MiniGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
         MiniGameSignals.Instance.onGetReward -= OnGetReward;
-    }
-    private IEnumerator MoveToNextLevel()
-    {
-        yield return new WaitForSeconds(1f);
-        MiniGameSignals.Instance.onMoveToNextLevel?.Invoke(finishPos.position);
-    }
+        MiniGameSignals.Instance.onMiniGameAreaSuccessFull -= OnActivateAnimations;
+    } 
 }
