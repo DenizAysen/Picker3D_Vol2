@@ -75,14 +75,15 @@ public class LevelManager : MonoBehaviour
         
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
-        StartCoroutine(LoadNextlevel());
+        StartCoroutine(InitializeLevels());
     }
     private void OnRestartLevel()
     {
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
-        CameraSignals.Instance.onSetCameraTarget?.Invoke();
+        //CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
+        //CameraSignals.Instance.onSetCameraTarget?.Invoke();
+        StartCoroutine(InitializeLevels());
     }
     private void UnSubscribeEvents()
     {
@@ -104,7 +105,7 @@ public class LevelManager : MonoBehaviour
         CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
     }
 
-    private IEnumerator LoadNextlevel()
+    private IEnumerator InitializeLevels()
     {
         yield return new WaitForSeconds(.1f);
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
