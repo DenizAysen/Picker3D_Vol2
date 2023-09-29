@@ -41,7 +41,8 @@ public class LevelPanelController : MonoBehaviour
         UISignals.Instance.onIncreaseFillValue += OnIncreaseFillValue;
         UISignals.Instance.onDecreaseFillValue += OnDecreaseFillValue;
         UISignals.Instance.onResetStageColors += OnResetStageColors;
-        MiniGameSignals.Instance.onGetReward += OnGetReward;
+        UISignals.Instance.onSetScoretext += OnSetScoreText;
+        MiniGameSignals.Instance.onGetReward += OnGetRewardText;
     }
     [NaughtyAttributes.Button]
     private void OnSetStageColor0()
@@ -87,9 +88,17 @@ public class LevelPanelController : MonoBehaviour
         slider.DOValue(collectedValue, 1f).OnComplete(() => ChangePercentageText(slider.value * 100));
         fillImage.color = gradient.Evaluate(slider.value);
     }
-    private void OnGetReward(short rewardValue)
+    private void OnGetRewardText(short rewardValue)
     {
-        scoreText.text = rewardValue.ToString();
+        Debug.Log("Gelen para : " + rewardValue);
+        Debug.Log("Eldeki para : " + SaveSignals.Instance.onGetEarnedMoney?.Invoke());
+        Debug.Log("Toplam para : " + (SaveSignals.Instance.onGetEarnedMoney?.Invoke() + rewardValue));
+        SaveSignals.Instance.onSaveMoney?.Invoke((short)(SaveSignals.Instance.onGetEarnedMoney?.Invoke() + rewardValue));
+        scoreText.text = (SaveSignals.Instance.onGetEarnedMoney?.Invoke()).ToString();
+    }
+    private void OnSetScoreText()
+    {
+        scoreText.text = (SaveSignals.Instance.onGetEarnedMoney?.Invoke()).ToString();
     }
     private void ChangePercentageText(float value)
     {
@@ -102,7 +111,8 @@ public class LevelPanelController : MonoBehaviour
         UISignals.Instance.onIncreaseFillValue -= OnIncreaseFillValue;
         UISignals.Instance.onResetStageColors -= OnResetStageColors;
         UISignals.Instance.onDecreaseFillValue -= OnDecreaseFillValue;
-        MiniGameSignals.Instance.onGetReward -= OnGetReward;
+        UISignals.Instance.onSetScoretext -= OnSetScoreText;
+        MiniGameSignals.Instance.onGetReward -= OnGetRewardText;
     }
     private void OnDisable()
     {

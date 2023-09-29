@@ -30,17 +30,15 @@ public class MiniGameController : MonoBehaviour
 
     private void OnMiniGameAreaEntered()
     {
-        UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelValue?.Invoke() + 1));
+        //UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelValue?.Invoke() + 1));
+        UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelTextValue?.Invoke() + 1));
         UISignals.Instance.onResetStageColors?.Invoke();
         TargetZPos(MiniGameSignals.Instance.onGetCollectedPercentageValue?.Invoke());
     }
 
     private void TargetZPos(float? percentage)
-    {
-        
-        Debug.Log("Donusmeden onceki yuzdelik : " + percentage);
-        int _percentage = Convert.ToInt32(percentage);
-        Debug.Log("Yuzdelik : " + _percentage);
+    {     
+        int _percentage = Convert.ToInt32(percentage);     
         float distance = endPos.position.z - startPos.position.z;
         float targetZPos = ((distance * _percentage) / 100f) + startPos.position.z;
         MiniGameSignals.Instance.onSetRewardAreaPosition?.Invoke(targetZPos);

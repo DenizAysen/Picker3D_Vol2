@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
 
     #region Private Variables
 
-    private short _currentLevel;
+    private short _currentLevel , _gameLoopCount;
     private LevelData _levelData;
     private OnLevelLoaderCommand _levelLoaderCommand;
     private OnLevelDestroyedCommand _levelDestroyerCommand;
@@ -25,7 +25,8 @@ public class LevelManager : MonoBehaviour
     {
         _levelData = GetLevelData();
         _currentLevel = GetActiveLevel();
-        
+        _gameLoopCount = GetGameLoopCount();
+
         Init();
     }
     private void Init()
@@ -41,6 +42,10 @@ public class LevelManager : MonoBehaviour
     private byte GetActiveLevel()
     {
         return (byte) _currentLevel;
+    }
+    private byte GetGameLoopCount()
+    {
+        return (byte)(SaveSignals.Instance.onGetGameLoopCount?.Invoke());
     }
 
     private void OnEnable()
@@ -60,6 +65,7 @@ public class LevelManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelInitialize += _levelLoaderCommand.Execute;
         CoreGameSignals.Instance.onClearActiveLevel += _levelDestroyerCommand.Execute;
         CoreGameSignals.Instance.onGetLevelValue += OnGetLevelValue;
+        CoreGameSignals.Instance.onGetLevelTextValue += OnGetLevelTextValue;
         CoreGameSignals.Instance.onNextLevel += OnNextLevel;
         CoreGameSignals.Instance.onRestartLevel += OnRestartLevel;
     }
@@ -68,11 +74,19 @@ public class LevelManager : MonoBehaviour
     { 
         return (byte)(_currentLevel % totalLevelCount); 
     }
+    public byte OnGetLevelTextValue()
+    {
+        return (byte)(_currentLevel % totalLevelCount + _gameLoopCount*totalLevelCount);
+    }
     [NaughtyAttributes.Button]
     private void OnNextLevel()
     {
         _currentLevel++;
-        
+        if (_currentLevel % totalLevelCount == 0)
+        {
+            _gameLoopCount++;
+            SaveSignals.Instance.onSaveGameLoopCount?.Invoke(_gameLoopCount);
+        }
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
         StartCoroutine(InitializeLevels());
@@ -90,6 +104,7 @@ public class LevelManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelInitialize -= _levelLoaderCommand.Execute;
         CoreGameSignals.Instance.onClearActiveLevel -= _levelDestroyerCommand.Execute;
         CoreGameSignals.Instance.onGetLevelValue -= OnGetLevelValue;
+        CoreGameSignals.Instance.onGetLevelTextValue += OnGetLevelTextValue;
         CoreGameSignals.Instance.onNextLevel -= OnNextLevel;
         CoreGameSignals.Instance.onRestartLevel -= OnRestartLevel;
     }

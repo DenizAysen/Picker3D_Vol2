@@ -17,6 +17,5 @@ public class OnLevelDestroyedCommand
         //    Debug.Log(_levelHolder.GetChild(i).name);
 
         //}
-        Debug.Log("Level holderin chid countu : " + _levelHolder.childCount);
     }
 }

@@ -43,7 +43,9 @@ public class UIManager : MonoBehaviour
     private void OnLevelInitialize(byte arg0)
     {
         CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Level, 0);
-        UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelValue?.Invoke()));
+        //UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelValue?.Invoke()));
+        UISignals.Instance.onSetLevelValue?.Invoke((byte)(CoreGameSignals.Instance.onGetLevelTextValue?.Invoke()));
+        UISignals.Instance.onSetScoretext?.Invoke();
     }
     private void UnSubscribeEvents()
     {
@@ -67,7 +69,6 @@ public class UIManager : MonoBehaviour
     }
     public void Play()
     {
-        Debug.Log("Play Metodu calisti");
         UISignals.Instance.onPlay?.Invoke();
         CoreUISignals.Instance.onClosePanel?.Invoke(1);
         CameraSignals.Instance.onSetCameraTarget?.Invoke();

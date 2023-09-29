@@ -12,7 +12,6 @@ public class OnLevelLoaderCommand
         //2 level arasi bosluk 174.77
         if(_levelHolder.childCount == 0)
         {
-            Debug.Log("Commandin bu bolumu calisti");
             Object.Instantiate(Resources.Load<GameObject>($"Prefabs/LevelPrefabs/level {levelIndex}"), _levelHolder);
         }
             
