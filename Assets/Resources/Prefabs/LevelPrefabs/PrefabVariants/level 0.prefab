@@ -66,6 +66,7 @@ MonoBehaviour:
   - {fileID: 1607960795568366574}
   - {fileID: 5880030585860621791}
   - {fileID: 1669345756937832452}
+  tweens: []
 --- !u!1 &642868252823611215
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +945,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23267972e1fd20a4da443d90062b37ad, type: 2}
+  - {fileID: 2100000, guid: 717c875f0c833aa4d802a1cb37419aaf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5925,7 +5926,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 23267972e1fd20a4da443d90062b37ad, type: 2}
+      objectReference: {fileID: 2100000, guid: 717c875f0c833aa4d802a1cb37419aaf, type: 2}
     - target: {fileID: 3638093150348286947, guid: fe2a211abcb6e414e935a92aa21cf2a7,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -6253,7 +6254,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 23267972e1fd20a4da443d90062b37ad, type: 2}
+      objectReference: {fileID: 2100000, guid: 717c875f0c833aa4d802a1cb37419aaf, type: 2}
     - target: {fileID: 3638093150348286947, guid: fe2a211abcb6e414e935a92aa21cf2a7,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -6668,7 +6669,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 23267972e1fd20a4da443d90062b37ad, type: 2}
+      objectReference: {fileID: 2100000, guid: 717c875f0c833aa4d802a1cb37419aaf, type: 2}
     - target: {fileID: 3638093150348286947, guid: fe2a211abcb6e414e935a92aa21cf2a7,
         type: 3}
       propertyPath: m_LocalPosition.y

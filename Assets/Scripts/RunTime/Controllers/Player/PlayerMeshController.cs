@@ -37,7 +37,6 @@ public class PlayerMeshController : MonoBehaviour
     internal void ScaleUpPlayer()
     {
         _currentPlayerXScale = renderer.gameObject.transform.localScale.x;
-        Debug.Log("Pickerin x boyutu : " + _defaultPlayerXScale);
         renderer.gameObject.transform.DOScaleX(_currentPlayerXScale * _data.ScaleCounter, 1).SetEase(Ease.Flash);
     }
     //internal void ScaleUpText()

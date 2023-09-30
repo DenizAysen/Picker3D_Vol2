@@ -21,6 +21,8 @@ public class SaveSignals : MonoBehaviour
     #endregion
     public UnityAction<short> onSaveGameLoopCount = delegate { };
     public UnityAction<short> onSaveMoney = delegate { };
+    public UnityAction<short> onSaveLastPlayedLevel = delegate { };
     public Func<byte> onGetGameLoopCount = delegate { return 0; };
+    public Func<byte> onGetLastPlayedLevelIndex = delegate { return 0; };
     public Func<short> onGetEarnedMoney = delegate { return 0; };
 }

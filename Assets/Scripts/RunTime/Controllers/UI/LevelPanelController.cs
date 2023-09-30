@@ -90,9 +90,6 @@ public class LevelPanelController : MonoBehaviour
     }
     private void OnGetRewardText(short rewardValue)
     {
-        Debug.Log("Gelen para : " + rewardValue);
-        Debug.Log("Eldeki para : " + SaveSignals.Instance.onGetEarnedMoney?.Invoke());
-        Debug.Log("Toplam para : " + (SaveSignals.Instance.onGetEarnedMoney?.Invoke() + rewardValue));
         SaveSignals.Instance.onSaveMoney?.Invoke((short)(SaveSignals.Instance.onGetEarnedMoney?.Invoke() + rewardValue));
         scoreText.text = (SaveSignals.Instance.onGetEarnedMoney?.Invoke()).ToString();
     }

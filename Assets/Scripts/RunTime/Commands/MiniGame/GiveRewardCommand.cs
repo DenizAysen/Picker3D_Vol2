@@ -32,6 +32,5 @@ public class GiveRewardCommand
         }
         short _maxValue = values.Max();
         MiniGameSignals.Instance.onGetReward?.Invoke(_maxValue);
-        Debug.Log(_maxValue + " elmas kazanildi");
     }
 }

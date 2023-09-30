@@ -15,6 +15,7 @@ public class PoolController : MonoBehaviour
     [SerializeField] private TextMeshPro poolText;
     [SerializeField] private byte stageID;
     [SerializeField] private new Renderer renderer;
+    [SerializeField] private GameObject[] collectibles;
 
     #endregion
 
@@ -67,6 +68,7 @@ public class PoolController : MonoBehaviour
         {
             tween.DOPlay();
         }
+        CoreGameSignals.Instance.onCloseGameObjects?.Invoke(collectibles);
     }
     
     private void Start()

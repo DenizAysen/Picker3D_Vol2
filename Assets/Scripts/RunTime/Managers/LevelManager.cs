@@ -23,8 +23,10 @@ public class LevelManager : MonoBehaviour
     #endregion
     private void Awake()
     {
+        _currentLevel = (short)(SaveSignals.Instance.onGetLastPlayedLevelIndex?.Invoke());
         _levelData = GetLevelData();
-        _currentLevel = GetActiveLevel();
+        //_currentLevel = GetActiveLevel();
+        Debug.Log(_currentLevel);
         _gameLoopCount = GetGameLoopCount();
 
         Init();
@@ -76,7 +78,7 @@ public class LevelManager : MonoBehaviour
     }
     public byte OnGetLevelTextValue()
     {
-        return (byte)(_currentLevel % totalLevelCount + _gameLoopCount*totalLevelCount);
+        return (byte)(SaveSignals.Instance.onGetLastPlayedLevelIndex?.Invoke() + _gameLoopCount*totalLevelCount);
     }
     [NaughtyAttributes.Button]
     private void OnNextLevel()
@@ -87,6 +89,7 @@ public class LevelManager : MonoBehaviour
             _gameLoopCount++;
             SaveSignals.Instance.onSaveGameLoopCount?.Invoke(_gameLoopCount);
         }
+        SaveSignals.Instance.onSaveLastPlayedLevel((byte)(_currentLevel % totalLevelCount));
         CoreGameSignals.Instance.onClearActiveLevel?.Invoke();
         CoreGameSignals.Instance.onReset?.Invoke();
         StartCoroutine(InitializeLevels());
@@ -114,9 +117,9 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte) (_currentLevel % totalLevelCount));
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(SaveSignals.Instance.onGetLastPlayedLevelIndex?.Invoke()));
         //Debug.Log((_currentLevel + 1) % totalLevelCount);
-        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)((_currentLevel+1) % totalLevelCount));
+        CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(SaveSignals.Instance.onGetLastPlayedLevelIndex?.Invoke()+1));
         CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
     }
 
@@ -126,5 +129,6 @@ public class LevelManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)((_currentLevel + 1) % totalLevelCount));
         CameraSignals.Instance.onSetCameraTarget?.Invoke();
+        MiniGameSignals.Instance.onResetTotalSpawnedCollectibles?.Invoke();
     }
 }

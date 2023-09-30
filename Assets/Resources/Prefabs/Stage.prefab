@@ -282,8 +282,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9999999, y: 0.9999999, z: 1.6652608}
-  m_Center: {x: 0, y: 0, z: -0.3326316}
+  m_Size: {x: 0.9999999, y: 1.6819487, z: 1.6652608}
+  m_Center: {x: 0, y: 0.34097454, z: -0.3326316}
 --- !u!114 &4857775340136883327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +303,7 @@ MonoBehaviour:
   poolText: {fileID: 3781382256440334465}
   stageID: 0
   renderer: {fileID: 2247473120031815094}
+  collectibles: []
 --- !u!1 &1275121171013889477
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,8 +399,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.876131, z: 1}
+  m_Center: {x: 0, y: 0.43806627, z: 0}
 --- !u!1 &1326787844427834126
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,8 +3356,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0283115, y: 1.9160978, z: 1}
+  m_Center: {x: -0.019427583, y: 0.45804915, z: 0}
 --- !u!1 &8219796874671024066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3683,8 +3684,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.9349368, z: 1}
+  m_Center: {x: 0, y: 0.4674694, z: 0}
 --- !u!1 &8551385581241478996
 GameObject:
   m_ObjectHideFlags: 0

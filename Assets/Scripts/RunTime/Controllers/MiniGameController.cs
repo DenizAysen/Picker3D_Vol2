@@ -38,7 +38,7 @@ public class MiniGameController : MonoBehaviour
 
     private void TargetZPos(float? percentage)
     {     
-        int _percentage = Convert.ToInt32(percentage);     
+        int _percentage = Convert.ToInt32(percentage);
         float distance = endPos.position.z - startPos.position.z;
         float targetZPos = ((distance * _percentage) / 100f) + startPos.position.z;
         MiniGameSignals.Instance.onSetRewardAreaPosition?.Invoke(targetZPos);

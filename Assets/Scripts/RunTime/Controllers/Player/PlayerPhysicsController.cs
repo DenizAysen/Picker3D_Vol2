@@ -75,9 +75,9 @@ public class PlayerPhysicsController : MonoBehaviour
         var position1 = transform1.position;
         var forcePos = new Vector3(position1.x, position1.y + 1f, position1.z + 1f);
 
-        
-        //Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + 1.25f), 1.75f);
-        Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z +.76f), 1.4f);
+
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + 1.65f), 1.95f);
+       // Gizmos.DrawSphere(new Vector3(position1.x, position1.y, position1.z + .76f), 1.4f);
         //Gizmos.DrawCube(new Vector3(position1.x, position1.y, position1.z+.9f), Vector3.one*2.5f);
     }
     public void OnReset()

@@ -25,6 +25,10 @@ public class CollectableManager : MonoBehaviour
     {
         return Resources.Load<CD_Level>("Data/CD_Level").Levels[(int)(CoreGameSignals.Instance.onGetLevelValue?.Invoke())].TotalSpawnedCollectableCount;
     }
+    private void SetCurrentLevelTotalCollectiblesCount()
+    {
+        _totalSpawnedCollectableCount = GetTotalSpawnedCollectableCount();
+    }
     private void OnIncreaseCollectedCount(byte collectedCount)
     {
         _collectedCollectableCount += collectedCount;
@@ -40,6 +44,13 @@ public class CollectableManager : MonoBehaviour
         float percentage = (x / y) * 100f;
         return percentage;
     }
+    private void OnCloseCompletedStageCollectibles(GameObject[] collectibles)
+    {
+        foreach (var collectible in collectibles)
+        {
+            collectible.SetActive(false);
+        }
+    }
     private void OnReset()
     {
         _collectedCollectableCount = 0;
@@ -47,13 +58,17 @@ public class CollectableManager : MonoBehaviour
     private void SubscribeEvents()
     {
         CoreGameSignals.Instance.onIncreaseCollectedCount += OnIncreaseCollectedCount;
+        CoreGameSignals.Instance.onCloseGameObjects += OnCloseCompletedStageCollectibles;
         CoreGameSignals.Instance.onReset += OnReset;
+        MiniGameSignals.Instance.onResetTotalSpawnedCollectibles += SetCurrentLevelTotalCollectiblesCount;
         MiniGameSignals.Instance.onGetCollectedPercentageValue += ReturnCollectedPercentage;
     }
     private void UnSubscribeEvents()
     {
         CoreGameSignals.Instance.onIncreaseCollectedCount -= OnIncreaseCollectedCount;
+        CoreGameSignals.Instance.onCloseGameObjects -= OnCloseCompletedStageCollectibles;
         CoreGameSignals.Instance.onReset -= OnReset;
+        MiniGameSignals.Instance.onResetTotalSpawnedCollectibles -= SetCurrentLevelTotalCollectiblesCount;
         MiniGameSignals.Instance.onGetCollectedPercentageValue -= ReturnCollectedPercentage;
     }
     private void OnDisable()
