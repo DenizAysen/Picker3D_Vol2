@@ -17,7 +17,7 @@ public class ForceBallsToPoolCommand
         
         var transform1 = _manager.transform;
         var position1 = transform1.position;
-        var forcePos = new Vector3(position1.x, position1.y, position1.z + 1.65f);
+        var forcePos = new Vector3(position1.x, position1.y-1, position1.z + 1.65f);
 
         var colliders = Physics.OverlapSphere(forcePos, 1.95f);
 

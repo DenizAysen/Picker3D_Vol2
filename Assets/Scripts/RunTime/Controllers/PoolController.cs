@@ -16,6 +16,7 @@ public class PoolController : MonoBehaviour
     [SerializeField] private byte stageID;
     [SerializeField] private new Renderer renderer;
     [SerializeField] private GameObject[] collectibles;
+    [SerializeField] private ParticleSystem[] winParticles;
 
     #endregion
 
@@ -68,6 +69,7 @@ public class PoolController : MonoBehaviour
         {
             tween.DOPlay();
         }
+        PlayParticles();
         CoreGameSignals.Instance.onCloseGameObjects?.Invoke(collectibles);
     }
     
@@ -80,7 +82,13 @@ public class PoolController : MonoBehaviour
     {
         poolText.text = $"0/{_data.RequiredObjectCount}";
     }
-
+    private void PlayParticles()
+    {
+        foreach (var particle in winParticles)
+        {
+            particle.Play();
+        }
+    }
     internal bool TakeResults(byte managerStageValue)
     {
         if (stageID == managerStageValue)
